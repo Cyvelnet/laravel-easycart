@@ -1,6 +1,6 @@
 Laravel EasyCart
 ================
-
+[![StyleCI](https://styleci.io/repos/92111884/shield?branch=master)](https://styleci.io/repos/92111884)
 [![Build Status](https://travis-ci.org/Cyvelnet/laravel-easycart.svg?branch=master)](https://travis-ci.org/Cyvelnet/laravel-easycart)
 [![Total Downloads](https://poser.pugx.org/cyvelnet/laravel-easycart/downloads)](https://packagist.org/packages/cyvelnet/laravel-easycart)
 [![Latest Stable Version](https://poser.pugx.org/cyvelnet/laravel-easycart/v/stable)](https://packagist.org/packages/cyvelnet/laravel-easycart)
