@@ -169,9 +169,9 @@ Adding a condition is simple, just instantiate a Cyvelnet\EasyCart\CartCondition
 ```php 
 // Add a 50% discount to cart
 
-$50PercentDiscount = new CartCondition($name = '$50 Off', $value = '-50') // you have to use a - (minus sign) to indicate a discount is expected
+$fiftyPercentDiscount = new CartCondition($name = '$50 Off', $value = '-50') // you have to use a - (minus sign) to indicate a discount is expected
 
-EasyCart::condition($50PercentDiscount);
+EasyCart::condition($fiftyPercentDiscount);
 
 ```
 
@@ -179,10 +179,10 @@ Sometimes you want to only give an discount to only to a selected range of produ
 
 ```php 
 
-$50PercentDiscount = new CartCondition($name = '$50 Off', $value = '-50');
-$50PercentDiscount->onProduct([1,2,3,4]);
+$fiftyPercentDiscount = new CartCondition($name = '$50 Off', $value = '-50');
+$fiftyPercentDiscount->onProduct([1,2,3,4]);
 
-EasyCart::condition($50PercentDiscount);
+EasyCart::condition($fiftyPercentDiscount);
 
 ```
 
@@ -190,10 +190,10 @@ Life is not always easy, what if you need to give an discount of 20% but with a 
 
 ```php 
 
-$50PercentDiscount = new CartCondition($name = '20% Off', $value = '-20');
-$50PercentDiscount->maxAt(50);
+$fiftyPercentDiscount = new CartCondition($name = '20% Off', $value = '-20');
+$fiftyPercentDiscount->maxAt(50);
 
-EasyCart::condition($50PercentDiscount);
+EasyCart::condition($fiftyPercentDiscount);
 
 ```
 
