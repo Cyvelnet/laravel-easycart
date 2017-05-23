@@ -87,7 +87,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      */
     public function expirationTimestamp()
     {
-        return $this->instance->expireTimestamps();
+        return $this->instance->expirationTimestamp();
     }
 
     /**
