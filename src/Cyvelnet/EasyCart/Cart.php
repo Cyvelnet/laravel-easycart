@@ -2,8 +2,7 @@
 
 namespace Cyvelnet\EasyCart;
 
-
-/**
+/*
  * Class CartInstance
  *
  * @package Cyvelnet\EasyCart
@@ -15,9 +14,7 @@ use Cyvelnet\EasyCart\Contracts\ManipulatableInterface;
 use DateTime;
 
 /**
- * Class CartInstance
- *
- * @package Cyvelnet\EasyCart
+ * Class CartInstance.
  */
 class Cart extends ConditionableContract implements ManipulatableInterface
 {
@@ -54,7 +51,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * get cart items stored in an cart instance
+     * get cart items stored in an cart instance.
      *
      * @return \Cyvelnet\EasyCart\CartItemCollection
      */
@@ -64,7 +61,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * verify if a cart is expired
+     * verify if a cart is expired.
      *
      * @return bool
      */
@@ -75,11 +72,10 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         }
 
         return $this->expiration < new DateTime();
-
     }
 
     /**
-     * get the expiration timestamp
+     * get the expiration timestamp.
      *
      * @return int|null
      */
@@ -88,12 +84,10 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         if ($this->expiration instanceof \DateTime) {
             return $this->expiration->getTimestamp();
         }
-
-        return null;
     }
 
     /**
-     * get a cart item by rowId
+     * get a cart item by rowId.
      *
      * @param $rowId
      *
@@ -105,22 +99,20 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * add product to cart
+     * add product to cart.
      *
      * @param $id
-     * @param null $name
-     * @param null $price
-     * @param null $qty
+     * @param null  $name
+     * @param null  $price
+     * @param null  $qty
      * @param array $attributes
      * @param float $weight
      */
-    public function add($id, $name = null, $price = null, $qty = null, $attributes = array(), $weight = 0.0)
+    public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0)
     {
         // helps to add item one by one
         if (is_array($id)) {
-
             foreach ($id as $row) {
-
                 $this->add(
                     $row['id'],
                     $row['name'],
@@ -129,11 +121,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
                     array_key_exists('attributes', $row) ? $row['attributes'] : [],
                     array_key_exists('weight', $row) ? $row['weight'] : 0.0
                 );
-
             }
 
             return;
-
         }
 
         $item = new CartItem($id, $name, $price, $qty, $attributes, $weight);
@@ -146,23 +136,20 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             $existedItem->addQty($item->getQty());
 
             $item = $existedItem;
-
         }
 
         $this->addToCollection($item);
-
     }
 
     /**
-     * remove a cart item row
+     * remove a cart item row.
      *
      * @param $rowId
      *
-     * @return boolean
+     * @return bool
      */
     public function remove($rowId)
     {
-
         if (!$this->exists($rowId)) {
             return false;
         }
@@ -178,12 +165,10 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         $this->triggerEvent('deleted', $rowId, $item);
 
         return true;
-
-
     }
 
     /**
-     * update cart item by rowId
+     * update cart item by rowId.
      *
      * @param $rowId
      * @param array|int $qty
@@ -201,18 +186,16 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         // remove the item when has 0 qty
 
         if ($item->qty <= 0) {
-
             $this->remove($rowId);
 
             return false;
         }
 
         return $this->addToCollection($item);
-
     }
 
     /**
-     * destroy a cart
+     * destroy a cart.
      */
     public function destroy()
     {
@@ -220,7 +203,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\Collections\CartItemCollection
      */
@@ -230,7 +213,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\Collections\CartItemCollection
      */
@@ -240,7 +223,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * filter out cart item
+     * filter out cart item.
      *
      * @param string|int|callable $id
      *
@@ -249,19 +232,16 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     public function find($id)
     {
         if (is_callable($id)) {
-
             return $this->getCartItemCollection()->filter($id);
-
         }
 
         return $this->getCartItemCollection()->first(function ($item) use ($id) {
             return $item->id == $id;
         });
-
     }
 
     /**
-     * filter out cart items by matching cart item id against an array of ids
+     * filter out cart items by matching cart item id against an array of ids.
      *
      * @param array $ids
      *
@@ -270,9 +250,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     public function findByIds($ids = [])
     {
         return $this->find(function ($item) use ($ids) {
-
             return in_array($item->getId(), $ids);
-
         });
     }
 
@@ -289,7 +267,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * get the total weight per cart
+     * get the total weight per cart.
      *
      * @return float|int
      */
@@ -301,21 +279,19 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * get cart total without charges
+     * get cart total without charges.
      *
      * @return float|int
      */
     public function subtotal()
     {
-
         return $this->getCartItemCollection()->sum(function (CartItem $item) {
-
             return $item->total();
         });
     }
 
     /**
-     * get cart total with charges
+     * get cart total with charges.
      *
      * @return float|int
      */
@@ -325,36 +301,29 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * add cart condition
+     * add cart condition.
      *
      * @param array|CartCondition $condition
      */
     public function condition($condition)
     {
         if (is_array($condition)) {
-
             foreach ($condition as $item) {
-
                 $this->condition($item);
-
             }
-
         }
 
         if ($condition instanceof CartCondition && $this->conditions->doesntHaveCondition($condition)) {
-
             $this->conditions->push($condition);
 
             $this->applyConditionToItems($condition);
-
         }
 
         $this->persistCart();
-
     }
 
     /**
-     * get applied conditions
+     * get applied conditions.
      *
      * @return mixed
      */
@@ -364,58 +333,44 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * remove a condition by its type
+     * remove a condition by its type.
      *
      * @param $type
      */
     public function removeConditionByType($type)
     {
         $toRemoves = $this->getConditions()->filter(function ($item) use ($type) {
-
             return $item->getType() === $type;
-
         });
 
         $toRemoves->each(function ($item, $key) use ($type) {
-
             $this->conditions->forget($key);
 
             $this->getCartItemCollection()->each(function ($item) use ($type) {
-
                 $item->removeConditionByType($type);
-
             });
-
         });
-
     }
 
     /**
-     * remove a condition by its name
+     * remove a condition by its name.
      *
      * @param $name
      */
     public function removeConditionByName($name)
     {
         $toRemoves = $this->getConditions()->filter(function ($item) use ($name) {
-
             return $item->getName() === $name;
-
         });
 
         $toRemoves->each(function ($item, $key) use ($name) {
-
             $this->conditions->forget($key);
 
             $this->getCartItemCollection()->each(function ($item) use ($name) {
-
                 $item->removeConditionByName($name);
-
             });
-
         });
     }
-
 
     /**
      * @param $item
@@ -424,7 +379,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      */
     protected function addToCollection($item)
     {
-
         if (false === $this->triggerEvent('adding', $item)) {
             return false;
         }
@@ -440,8 +394,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         $this->triggerEvent('added', $item->rowId);
 
         return true;
-
-
     }
 
     /**
@@ -455,7 +407,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * get the conditions that should be calculated
+     * get the conditions that should be calculated.
      *
      * @return mixed
      */
@@ -464,38 +416,26 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         return $this->getConditions()->filter(function (CartCondition $condition) {
             return $condition->getTarget() === 'subtotal';
         });
-
     }
 
-    /**
-     *
-     */
     private function applyItemConditionToAllItems()
     {
-
         $this->conditions->filter(function ($item) {
-
             return count($item->getProducts()) > 0;
-
         })->each(function ($condition) {
-
             $this->applyConditionToItems($condition);
-
         });
-
     }
 
     /**
-     * apply the exact condition to cart item
+     * apply the exact condition to cart item.
      *
      * @param $condition
      */
     private function applyConditionToItems($condition)
     {
         $this->items->each(function ($item) use ($condition) {
-
             $item->condition(clone $condition);
-
         });
     }
 
@@ -517,5 +457,4 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     {
         app('session')->put($this->name, $this);
     }
-
 }

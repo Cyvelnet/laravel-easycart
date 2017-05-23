@@ -2,15 +2,11 @@
 
 namespace Cyvelnet\EasyCart\Collections;
 
-
 use Illuminate\Support\Collection;
 
 /**
- * Class CartItemCollection
- *
- * @package Cyvelnet\EasyCart
+ * Class CartItemCollection.
  */
 class CartItemCollection extends Collection
 {
-
 }

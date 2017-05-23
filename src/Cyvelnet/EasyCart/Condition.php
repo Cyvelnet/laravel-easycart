@@ -2,11 +2,8 @@
 
 namespace Cyvelnet\EasyCart;
 
-
 /**
- * Class Condition
- *
- * @package Cyvelnet\EasyCart
+ * Class Condition.
  */
 abstract class Condition
 {
@@ -39,7 +36,7 @@ abstract class Condition
     protected $maxValue;
 
     /**
-     * set the condition target
+     * set the condition target.
      *
      * @return string
      */
@@ -49,7 +46,7 @@ abstract class Condition
     }
 
     /**
-     * set condition only apply to a range of product ids
+     * set condition only apply to a range of product ids.
      *
      * @return array
      */
@@ -59,7 +56,7 @@ abstract class Condition
     }
 
     /**
-     * set the maximum value when using percentage condition value
+     * set the maximum value when using percentage condition value.
      *
      * @return int|float
      */
@@ -67,7 +64,6 @@ abstract class Condition
     {
         return 0;
     }
-
 
     /**
      * @return string
