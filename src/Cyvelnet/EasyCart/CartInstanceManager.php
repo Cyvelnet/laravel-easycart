@@ -5,13 +5,10 @@ namespace Cyvelnet\EasyCart;
 use DateTime;
 
 /**
- * Class CartInstanceManager
- *
- * @package Cyvelnet\EasyCart
+ * Class CartInstanceManager.
  */
 class CartInstanceManager
 {
-
     const DEFAULT_INSTANCE_NAME = 'default';
 
     const CART_PREFIX = 'easycart_';
@@ -38,7 +35,7 @@ class CartInstanceManager
      * @param $instance
 
      *
-*@return \Cyvelnet\EasyCart\Cart
+     *@return \Cyvelnet\EasyCart\Cart
      */
     public function get($instance)
     {
@@ -47,18 +44,15 @@ class CartInstanceManager
         $this->instance = $name;
 
         return $this->session->get($name, new Cart($name));
-
     }
 
     /**
-     * create a new cart instance
-
+     * create a new cart instance.
      *
-*@param $instance
+     *@param $instance
      * @param null|DateTime $expiration
-
      *
-*@return \Cyvelnet\EasyCart\Cart
+     *@return \Cyvelnet\EasyCart\Cart
      */
     public function create($instance, $expiration = null)
     {
@@ -70,7 +64,7 @@ class CartInstanceManager
     }
 
     /**
-     * verify if an instance already been initialized
+     * verify if an instance already been initialized.
      *
      * @param $instance
      *
@@ -81,11 +75,10 @@ class CartInstanceManager
         $name = $this->getInstanceName($instance);
 
         return $this->session->has($name);
-
     }
 
     /**
-     * get current instance name
+     * get current instance name.
      *
      * @return string
      */
@@ -105,6 +98,5 @@ class CartInstanceManager
         $prefix = self::CART_PREFIX;
 
         return "{$prefix}{$instance}";
-
     }
 }

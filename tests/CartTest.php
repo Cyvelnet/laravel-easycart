@@ -1,12 +1,11 @@
 <?php
-use Cyvelnet\EasyCart\Cart;
+
 
 /**
- * Class CartTest
+ * Class CartTest.
  */
 class CartTest extends EasyCartTestCase
 {
-
     /**
      * @test
      */
@@ -14,8 +13,7 @@ class CartTest extends EasyCartTestCase
     {
         $cart = $this->getCartInstance();
 
-        $this->assertEquals("default", $cart->getCurrentInstanceName());
-
+        $this->assertEquals('default', $cart->getCurrentInstanceName());
     }
 
     /**
@@ -31,7 +29,6 @@ class CartTest extends EasyCartTestCase
 
         $this->assertEquals(2, $cart->instance()->content()->count());
         $this->assertEquals(1, $cart->instance('fooInstance')->content()->count());
-
     }
 
     /**
@@ -110,14 +107,14 @@ class CartTest extends EasyCartTestCase
                 'id'    => 1,
                 'name'  => 'foo',
                 'qty'   => 2,
-                'price' => 10.99
+                'price' => 10.99,
             ],
             [
                 'id'    => 2,
                 'name'  => 'foobar',
                 'qty'   => 4,
-                'price' => 20.99
-            ]
+                'price' => 20.99,
+            ],
         ]);
 
         $this->assertEquals(6, $cart->qty());
@@ -141,9 +138,9 @@ class CartTest extends EasyCartTestCase
                 'name'   => 'foobar',
                 'qty'    => 4,
                 'price'  => 20.99,
-                'weight' => 5.0
+                'weight' => 5.0,
 
-            ]
+            ],
         ]);
 
         $cart->add(3, 'foobarbaz', 30.99, 2, []);
@@ -180,7 +177,6 @@ class CartTest extends EasyCartTestCase
         $cart->add(1, 'foo', 10, 4, ['color' => 'red', 'size' => 'M']);
 
         $this->assertEquals(6, $cart->qty());
-
     }
 
     /**
@@ -196,19 +192,18 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 10.99
+                    'price' => 10.99,
                 ],
                 [
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 4,
-                    'price' => 10.99
-                ]
+                    'price' => 10.99,
+                ],
             ]
         );
 
         $this->assertEquals(6, $cart->qty());
-
     }
 
     /**
@@ -216,7 +211,6 @@ class CartTest extends EasyCartTestCase
      */
     public function it_should_get_an_accurate_cart_total()
     {
-
         $cart = $this->getCartInstance();
 
         $cart->add(
@@ -225,14 +219,14 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 10.99
+                    'price' => 10.99,
                 ],
                 [
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 4,
-                    'price' => 10.99
-                ]
+                    'price' => 10.99,
+                ],
             ]
         );
 
@@ -244,7 +238,6 @@ class CartTest extends EasyCartTestCase
      */
     public function it_should_not_be_expireable_when_not_provides_expiration_data()
     {
-
         $cart = $this->getCartInstance();
 
         $cart->add(1, 'foo', 10.99, 2);
@@ -257,7 +250,6 @@ class CartTest extends EasyCartTestCase
      */
     public function it_should_has_expiration_information_when_expiration_data_is_provided()
     {
-
         $cart = $this->getCartInstance();
 
         $expiredAt = (new DateTime())->add(new DateInterval('PT5M'));
@@ -280,14 +272,14 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 4,
-                    'price' => 200
-                ]
+                    'price' => 200,
+                ],
             ]
         );
 
@@ -296,7 +288,6 @@ class CartTest extends EasyCartTestCase
         $cart->condition($new50PercentDiscountCondition);
 
         $this->assertEquals($cart->subtotal() - ($cart->subtotal() * 0.5), $cart->total());
-
     }
 
     /**
@@ -311,14 +302,14 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 4,
-                    'price' => 200
-                ]
+                    'price' => 200,
+                ],
             ]
         );
 
@@ -328,7 +319,6 @@ class CartTest extends EasyCartTestCase
         $cart->condition($new50PercentDiscountCondition);
 
         $this->assertEquals($cart->subtotal() - 80, $cart->total());
-
     }
 
     /**
@@ -343,14 +333,14 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 1,
-                    'price' => 200
-                ]
+                    'price' => 200,
+                ],
             ]
         );
 
@@ -359,7 +349,6 @@ class CartTest extends EasyCartTestCase
         $cart->condition($new50DiscountCondition);
 
         $this->assertEquals(350, $cart->total());
-
     }
 
     /**
@@ -374,8 +363,8 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
-                ]
+                    'price' => 100,
+                ],
             ]
         );
 
@@ -390,14 +379,14 @@ class CartTest extends EasyCartTestCase
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 3,
                     'name'  => 'foobaz',
                     'qty'   => 2,
-                    'price' => 100
-                ]
+                    'price' => 100,
+                ],
             ]
         );
 
@@ -417,13 +406,13 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
             ]
         );
@@ -449,13 +438,13 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
             ]
         );
@@ -470,7 +459,6 @@ class CartTest extends EasyCartTestCase
         $this->assertTrue($cart->getConditions()->doesntHaveCondition($new50DiscountCondition));
         $this->assertTrue($cart->find(1)->getConditions()->doesntHaveCondition($new50DiscountCondition));
         $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($new50DiscountCondition));
-
     }
 
     /**
@@ -485,13 +473,13 @@ class CartTest extends EasyCartTestCase
                     'id'    => 1,
                     'name'  => 'foo',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
                 [
                     'id'    => 2,
                     'name'  => 'foobar',
                     'qty'   => 2,
-                    'price' => 100
+                    'price' => 100,
                 ],
             ]
         );
@@ -512,7 +500,5 @@ class CartTest extends EasyCartTestCase
         $this->assertTrue($cart->find(1)->getConditions()->doesntHaveCondition($newDiscountCondition));
         $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($new50DiscountCondition));
         $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($newDiscountCondition));
-
     }
-
 }

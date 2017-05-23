@@ -6,14 +6,12 @@ use Cyvelnet\EasyCart\CartCondition;
 use Illuminate\Support\Collection;
 
 /**
- * Class CartConditionCollection
- *
- * @package Cyvelnet\EasyCart
+ * Class CartConditionCollection.
  */
 class CartConditionCollection extends Collection
 {
     /**
-     * check if a given condition has been added
+     * check if a given condition has been added.
      *
      * @param \Cyvelnet\EasyCart\CartCondition $condition
      *
@@ -27,7 +25,7 @@ class CartConditionCollection extends Collection
     }
 
     /**
-     * check if a given condition has been added
+     * check if a given condition has been added.
      *
      * @param \Cyvelnet\EasyCart\CartCondition $condition
      *
