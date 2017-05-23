@@ -4,17 +4,12 @@ namespace Cyvelnet\EasyCart;
 
 use Cyvelnet\EasyCart\Contracts\ConditionableContract;
 use Cyvelnet\EasyCart\Contracts\ManipulatableInterface;
-use DateTime;
-use Illuminate\Events\Dispatcher as Event;
 
 /**
- * Class Cart
- *
- * @package Cyvelnet\EasyCart
+ * Class Cart.
  */
 class CartInstanceBridge extends ConditionableContract implements ManipulatableInterface
 {
-
     /**
      * @var string
      */
@@ -62,16 +57,14 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      */
     public function instance($instance = null, $expiredAt = null)
     {
-
         $this->instance = $this->manager->has($instance) ? $this->manager->get($instance) : $this->manager->create($instance,
             $expiredAt);
 
         return $this->instance;
-
     }
 
     /**
-     * verify if a cart is expired
+     * verify if a cart is expired.
      *
      * @return bool
      */
@@ -81,7 +74,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get the expiration timestamps
+     * get the expiration timestamps.
      *
      * @return int|null
      */
@@ -91,7 +84,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get a cart item by rowId
+     * get a cart item by rowId.
      *
      * @param $rowId
      *
@@ -103,26 +96,26 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * add product to cart
+     * add product to cart.
      *
      * @param $id
-     * @param null $name
-     * @param null $price
-     * @param null $qty
+     * @param null  $name
+     * @param null  $price
+     * @param null  $qty
      * @param array $attributes
      * @param float $weight
      */
-    public function add($id, $name = null, $price = null, $qty = null, $attributes = array(), $weight = 0.0)
+    public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0)
     {
         $this->instance->add($id, $name, $price, $qty, $attributes, $weight);
     }
 
     /**
-     * remove a cart item row
+     * remove a cart item row.
      *
      * @param $rowId
      *
-     * @return boolean
+     * @return bool
      */
     public function remove($rowId)
     {
@@ -130,7 +123,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * update cart item by rowId
+     * update cart item by rowId.
      *
      * @param $rowId
      * @param array|int $qty
@@ -143,7 +136,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * destroy a cart
+     * destroy a cart.
      */
     public function destroy()
     {
@@ -151,7 +144,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\CartItemCollection
      */
@@ -161,7 +154,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\CartItemCollection
      */
@@ -171,7 +164,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * filter out cart item
+     * filter out cart item.
      *
      * @param string|int|callable $id
      *
@@ -183,7 +176,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * filter out cart items by matching cart item id against an array of ids
+     * filter out cart items by matching cart item id against an array of ids.
      *
      * @param array $ids
      *
@@ -205,7 +198,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get the total weight per cart
+     * get the total weight per cart.
      *
      * @return float|int
      */
@@ -215,7 +208,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get cart total without charges
+     * get cart total without charges.
      *
      * @return float|int
      */
@@ -225,7 +218,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get cart total with charges
+     * get cart total with charges.
      *
      * @return float|int
      */
@@ -235,7 +228,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * add cart condition
+     * add cart condition.
      *
      * @param array|CartCondition $condition
      */
@@ -245,7 +238,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * get applied conditions
+     * get applied conditions.
      *
      * @return mixed
      */
@@ -255,7 +248,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * remove a condition by its type
+     * remove a condition by its type.
      *
      * @param $type
      */
@@ -265,7 +258,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     }
 
     /**
-     * remove a condition by its name
+     * remove a condition by its name.
      *
      * @param $name
      */
@@ -273,6 +266,4 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
     {
         $this->instance->removeConditionByName($name);
     }
-
-
 }

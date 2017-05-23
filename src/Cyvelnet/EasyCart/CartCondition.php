@@ -2,22 +2,17 @@
 
 namespace Cyvelnet\EasyCart;
 
-use Illuminate\Contracts\Support\Arrayable;
-
 /**
- * Class CartCondition
- *
- * @package Cyvelnet\EasyCart
+ * Class CartCondition.
  */
 class CartCondition extends Condition
 {
-
     /**
      * CartCondition constructor.
      *
      * @param $name
      * @param float|string $value
-     * @param string $type
+     * @param string       $type
      */
     public function __construct($name, $value, $type = null)
     {
@@ -29,18 +24,19 @@ class CartCondition extends Condition
     }
 
     /**
-     * apply condition on cart subtotal
+     * apply condition on cart subtotal.
      *
      * @return $this
      */
     public function onCart()
     {
         $this->target = 'subtotal';
+
         return $this;
     }
 
     /**
-     * apply condition on cart item
+     * apply condition on cart item.
      *
      * @param array $only Specify product ids a condition should apply
      *
@@ -50,11 +46,12 @@ class CartCondition extends Condition
     {
         $this->target = 'products';
         $this->products = $only;
+
         return $this;
     }
 
     /**
-     * set the maximum discount value limit
+     * set the maximum discount value limit.
      *
      * @param int|float $max
      *
@@ -63,7 +60,7 @@ class CartCondition extends Condition
     public function maxAt($max)
     {
         $this->maxValue = $max;
+
         return $this;
     }
-
 }

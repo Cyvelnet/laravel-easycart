@@ -4,7 +4,7 @@
  * Created by PhpStorm.
  * User: Terry
  * Date: 5/18/2017
- * Time: 1:57 AM
+ * Time: 1:57 AM.
  */
 class EasyCartTestCase extends \Orchestra\Testbench\TestCase
 {
@@ -23,7 +23,7 @@ class EasyCartTestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class EasyCartTestCase extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * get a cart instance
+     * get a cart instance.
      *
      * @return \Cyvelnet\EasyCart\CartInstanceBridge
      */
@@ -43,7 +43,5 @@ class EasyCartTestCase extends \Orchestra\Testbench\TestCase
         $bridge->instance();
 
         return $bridge;
-
     }
-
 }

@@ -5,7 +5,7 @@ namespace Cyvelnet\EasyCart;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class EasyCartServiceProvider
+ * Class EasyCartServiceProvider.
  */
 class EasyCartServiceProvider extends ServiceProvider
 {
@@ -23,10 +23,9 @@ class EasyCartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/easycart.php', 'easycart');
+        $this->mergeConfigFrom(__DIR__.'/config/easycart.php', 'easycart');
 
         $this->app->singleton('easycart', function ($app) {
-
             $manager = new CartInstanceManager($app['session'], $app['events']);
 
             $cart = new CartInstanceBridge($manager);
@@ -34,10 +33,6 @@ class EasyCartServiceProvider extends ServiceProvider
             $cart->instance();
 
             return $cart;
-
         });
-
-
     }
-
 }

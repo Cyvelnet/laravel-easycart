@@ -5,26 +5,26 @@ namespace Cyvelnet\EasyCart\Contracts;
 use Cyvelnet\EasyCart\CartCondition;
 
 /**
- * Interface ManipulatableInterface
+ * Interface ManipulatableInterface.
  */
 interface ManipulatableInterface
 {
     /**
-     * verify if a cart is expired
+     * verify if a cart is expired.
      *
      * @return bool
      */
     public function isExpired();
 
     /**
-     * get the expiration timestamps
+     * get the expiration timestamps.
      *
      * @return int|null
      */
     public function expirationTimestamp();
 
     /**
-     * get a cart item by rowId
+     * get a cart item by rowId.
      *
      * @param $rowId
      *
@@ -33,28 +33,28 @@ interface ManipulatableInterface
     public function get($rowId);
 
     /**
-     * add product to cart
+     * add product to cart.
      *
      * @param $id
-     * @param null $name
-     * @param null $price
-     * @param null $qty
+     * @param null  $name
+     * @param null  $price
+     * @param null  $qty
      * @param array $attributes
      * @param float $weight
      */
-    public function add($id, $name = null, $price = null, $qty = null, $attributes = array(), $weight = 0.0);
+    public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0);
 
     /**
-     * remove a cart item row
+     * remove a cart item row.
      *
      * @param $rowId
      *
-     * @return boolean
+     * @return bool
      */
     public function remove($rowId);
 
     /**
-     * update cart item by rowId
+     * update cart item by rowId.
      *
      * @param $rowId
      * @param array|int $qty
@@ -64,27 +64,26 @@ interface ManipulatableInterface
     public function update($rowId, $qty);
 
     /**
-     * destroy a cart
+     * destroy a cart.
      */
     public function destroy();
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\CartItemCollection
      */
     public function content();
 
     /**
-     * retrieves cart content
+     * retrieves cart content.
      *
      * @return \Cyvelnet\EasyCart\CartItemCollection
      */
     public function items();
 
-
     /**
-     * filter out cart item
+     * filter out cart item.
      *
      * @param string|int|callable $id
      *
@@ -93,7 +92,7 @@ interface ManipulatableInterface
     public function find($id);
 
     /**
-     * filter out cart items by matching cart item id against an array of ids
+     * filter out cart items by matching cart item id against an array of ids.
      *
      * @param array $ids
      *
@@ -109,32 +108,30 @@ interface ManipulatableInterface
     public function qty();
 
     /**
-     * get the total weight per cart
+     * get the total weight per cart.
      *
      * @return float|int
      */
     public function weight();
 
     /**
-     * get cart total without charges
+     * get cart total without charges.
      *
      * @return float|int
      */
     public function subtotal();
 
     /**
-     * get cart total with charges
+     * get cart total with charges.
      *
      * @return float|int
      */
     public function total();
 
     /**
-     * add cart condition
+     * add cart condition.
      *
      * @param array|CartCondition $condition
      */
     public function condition($condition);
-
-
 }

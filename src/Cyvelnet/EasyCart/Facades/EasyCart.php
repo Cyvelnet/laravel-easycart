@@ -2,25 +2,22 @@
 
 namespace Cyvelnet\EasyCart\Facades;
 
-
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class EasyCart
- *
- * @package Cyvelnet\EasyCart\Facades
+ * Class EasyCart.
  */
 class EasyCart extends Facade
 {
     /**
      * Get the registered name of the component.
      *
-     * @return string
      * @throws \RuntimeException
+     *
+     * @return string
      */
     protected static function getFacadeAccessor()
     {
         return 'easycart';
     }
-
 }

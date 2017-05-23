@@ -7,11 +7,10 @@ use Cyvelnet\EasyCart\Contracts\ConditionableContract;
 use Illuminate\Support\Arr;
 
 /**
- * Class CartItem
+ * Class CartItem.
  */
 class CartItem extends ConditionableContract
 {
-
     /**
      * @var
      */
@@ -68,17 +67,17 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item subtotal
+     * get cart item subtotal.
      *
      * @return mixed
      */
     public function subtotal()
     {
-        return ($this->getPrice() * $this->getQty());
+        return $this->getPrice() * $this->getQty();
     }
 
     /**
-     * get cart item total
+     * get cart item total.
      *
      * @return mixed
      */
@@ -88,13 +87,13 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get total weight of cart item
+     * get total weight of cart item.
      *
      * @return float|int
      */
     public function getTotalWeight()
     {
-        return ($this->getWeight() * $this->getQty());
+        return $this->getWeight() * $this->getQty();
     }
 
     /**
@@ -106,7 +105,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item product id
+     * get cart item product id.
      *
      * @return mixed
      */
@@ -116,7 +115,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item product name
+     * get cart item product name.
      *
      * @return mixed
      */
@@ -126,9 +125,9 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item product price
+     * get cart item product price.
      *
-     * @return int|float|double
+     * @return int|float|float
      */
     public function getPrice()
     {
@@ -136,7 +135,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item product purchase qty
+     * get cart item product purchase qty.
      *
      * @return int
      */
@@ -146,7 +145,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item product attributes
+     * get cart item product attributes.
      *
      * @return array
      */
@@ -156,7 +155,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item weight
+     * get cart item weight.
      *
      * @return float|int
      */
@@ -166,52 +165,42 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * add qty to the current item
+     * add qty to the current item.
      *
      * @param int $qty
      */
     public function addQty($qty = 1)
     {
         if (is_int($qty) && $qty >= 1) {
-
             $this->qty += $qty;
         }
-
     }
 
     /**
-     * merge & overrides cart item values
+     * merge & overrides cart item values.
      *
      * @param array $attributes
      */
     public function mergeFromArray($attributes = [])
     {
-
         $allowedAttributes = Arr::only($attributes, ['name', 'price', 'qty', 'attributes']);
 
         foreach ($allowedAttributes as $attribute => $data) {
-
             $this->{$attribute} = $data;
-
         }
-
     }
 
     /**
-     * add condition
+     * add condition.
      *
      * @param array|\Cyvelnet\EasyCart\CartCondition $condition
      */
     public function condition($condition)
     {
         if (is_array($condition)) {
-
             foreach ($condition as $item) {
-
                 $this->condition($item);
-
             }
-
         }
 
         // ensure the condition should be apply to this products
@@ -219,14 +208,12 @@ class CartItem extends ConditionableContract
             && (count($condition->getProducts()) === 0 || in_array($this->getId(), $condition->getProducts()))
             && ($condition->getTarget() === 'products')
         ) {
-
             $this->conditions->push($condition);
-
         }
     }
 
     /**
-     * get applied conditions
+     * get applied conditions.
      *
      * @return mixed
      */
@@ -236,42 +223,34 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * remove a condition by its type
+     * remove a condition by its type.
      *
      * @param $type
      */
     public function removeConditionByType($type)
     {
         $toRemoves = $this->getConditions()->filter(function ($item) use ($type) {
-
             return $item->getType() === $type;
-
         });
 
         $toRemoves->each(function ($item, $key) use ($type) {
-
             $this->conditions->forget($key);
-
         });
     }
 
     /**
-     * remove a condition by its name
+     * remove a condition by its name.
      *
      * @param $name
      */
     public function removeConditionByName($name)
     {
         $toRemoves = $this->getConditions()->filter(function ($item) use ($name) {
-
             return $item->getName() === $name;
-
         });
 
         $toRemoves->each(function ($item, $key) {
-
             $this->conditions->forget($key);
-
         });
     }
 
@@ -280,18 +259,15 @@ class CartItem extends ConditionableContract
      */
     private function generateRowId()
     {
-
         $attributes = $this->getAttributes();
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId() . serialize($attributes));
-
+        return md5($this->getId().serialize($attributes));
     }
 
-
     /**
-     * get the conditions that should be calculated
+     * get the conditions that should be calculated.
      *
      * @return mixed
      */
@@ -300,7 +276,6 @@ class CartItem extends ConditionableContract
         return $this->getConditions()->filter(function (CartCondition $condition) {
             return $condition->getTarget() === 'products';
         });
-
     }
 
     /**
@@ -311,10 +286,7 @@ class CartItem extends ConditionableContract
     public function __get($name)
     {
         if (property_exists($this, $name)) {
-
             return $this->{$name};
-
         }
     }
-
 }
