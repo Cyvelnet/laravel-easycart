@@ -1,0 +1,29 @@
+{
+    "name": "cyvelnet/laravel-easycart",
+    "description": "A simple & easy to use yet powerful laravel cart solution",
+    "keywords": ["laravel cart","shopping cart","easycart"],
+    "require": {
+        "illuminate/support": "5.4.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.7.*",
+        "orchestra/testbench": "3.4.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Cyvelnet\\EasyCart\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/EasyCartTestCase.php"
+        ]
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cyvelnet",
+            "email": "cyvelnet@gmail.com"
+        }
+    ]
+}

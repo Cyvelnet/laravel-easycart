@@ -1,0 +1,32 @@
+<?php
+
+class {name} extends Condition{
+
+
+    public function condition() {
+
+        return [
+
+            'name' => '',
+            'type' => '',
+            'value' => ''       // -10% to deduct by 10%, 20 to add additional 20 fix amount
+
+        ];
+
+    }
+
+    /**
+     * set the condition target
+     *
+     * @param $target
+     *
+     * @return string
+     */
+    public function on(){
+
+        // possible options are subtotal and products
+        return 'subtotal';
+
+    }
+
+}

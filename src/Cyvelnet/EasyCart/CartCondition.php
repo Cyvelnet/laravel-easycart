@@ -1,0 +1,69 @@
+<?php
+
+namespace Cyvelnet\EasyCart;
+
+use Illuminate\Contracts\Support\Arrayable;
+
+/**
+ * Class CartCondition
+ *
+ * @package Cyvelnet\EasyCart
+ */
+class CartCondition extends Condition
+{
+
+    /**
+     * CartCondition constructor.
+     *
+     * @param $name
+     * @param float|string $value
+     * @param string $type
+     */
+    public function __construct($name, $value, $type = null)
+    {
+        $this->name = $name;
+        $this->value = $value;
+        $this->type = $type;
+        $this->onCart();
+        $this->products = [];
+    }
+
+    /**
+     * apply condition on cart subtotal
+     *
+     * @return $this
+     */
+    public function onCart()
+    {
+        $this->target = 'subtotal';
+        return $this;
+    }
+
+    /**
+     * apply condition on cart item
+     *
+     * @param array $only Specify product ids a condition should apply
+     *
+     * @return $this
+     */
+    public function onProduct($only = [])
+    {
+        $this->target = 'products';
+        $this->products = $only;
+        return $this;
+    }
+
+    /**
+     * set the maximum discount value limit
+     *
+     * @param int|float $max
+     *
+     * @return $this
+     */
+    public function maxAt($max)
+    {
+        $this->maxValue = $max;
+        return $this;
+    }
+
+}
