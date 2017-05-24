@@ -90,6 +90,15 @@ Remove an item from cart
 EasyCart::remove($rowId);
 
 ```
+
+### EasyCart::get()
+Get a row by rowId
+
+```php
+
+EasyCart::get($rowId);
+
+```
 ### EasyCart::destroy()
 Wipe cart completely
 
