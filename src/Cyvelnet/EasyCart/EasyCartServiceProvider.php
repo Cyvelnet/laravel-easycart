@@ -17,13 +17,25 @@ class EasyCartServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Boot the service provider.
+     */
+    public function boot()
+    {
+        if (function_exists('config_path')) {
+            $this->publishes([
+                __DIR__ . '/config/easycart.php' => config_path('easycart.php'),
+            ], 'easycart');
+        }
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/easycart.php', 'easycart');
+        $this->mergeConfigFrom(__DIR__ . '/config/easycart.php', 'easycart');
 
         $this->app->singleton('easycart', function ($app) {
             $manager = new CartInstanceManager($app['session'], $app['events']);
@@ -32,7 +44,28 @@ class EasyCartServiceProvider extends ServiceProvider
 
             $cart->instance();
 
+            $taxes = $app['config']->get('easycart.taxes');
+
+            foreach ($taxes as $name => $value) {
+
+                // add global condition
+                $manager->addGlobalCondition($name, $value, 'tax');
+
+            }
+
+
             return $cart;
         });
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [];
+    }
+
 }

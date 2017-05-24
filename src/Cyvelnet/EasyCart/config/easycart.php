@@ -2,6 +2,11 @@
 
 return [
 
-    'clean_on_expired' => true,
+    'taxes' => [
+
+        // 'VAT' => '12.5%',
+        // 'GST' => '6%'
+
+    ]
 
 ];

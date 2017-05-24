@@ -89,30 +89,88 @@ abstract class ConditionableContract
     }
 
     /**
+     * get conditions which is not targeted on products and is not tax type condition
+     *
+     * @return mixed
+     */
+    public function getNonProductAndTaxConditions()
+    {
+        return $this->getConditions()->filter(function (CartCondition $condition) {
+
+            return $condition->getTarget() !== 'products' && $condition->getType() !== 'tax';
+
+        });
+    }
+
+    /**
+     * get tax type condition
+     *
+     * @return mixed
+     */
+    public function getTaxConditions()
+    {
+        return $this->getConditions()->filter(function (CartCondition $condition) {
+
+            return $condition->getType() === 'tax';
+
+        });
+    }
+
+    /**
      * calculate condition values.
      *
      * @return int|float
      */
-    protected function calculateConditionValue()
+    protected function calculateTotal()
     {
-        $values = [];
+        $sum = $this->subtotal();
 
-        $this->getCalculateableCondition()->each(function (CartCondition $condition) use (&$values) {
-            if (preg_match('/[+-]?[0-9]+%/', preg_replace('/\s+/', '', $condition->getValue()), $matches)) {
-                $conditionValue = (int) $matches[0];
-                $percentage = (float) $matches[0] / 100;
+        $this->getNonProductAndTaxConditions()->each(function (CartCondition $condition) use (&$sum) {
 
-                $value = $this->subtotal() * $percentage;
-            } else {
-                $conditionValue = (int) $condition->getValue();
-                $value = (int) $condition->getValue();
-            }
+            $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
 
-            $calculatedValue = abs(($condition->maxValue() && abs($value) > $condition->maxValue()) ? $condition->maxValue() : $value);
-
-            $values[] = $conditionValue >= 0 ? $calculatedValue : -$calculatedValue;
         });
 
-        return array_sum($values);
+        // calculate tax after all conditions
+        return $this->calculateTaxes($sum);
+
+    }
+
+    private function calculateValue($value, $baseValue, $maxValue = null)
+    {
+        if (preg_match('/[+-]?[0-9.]+%/', preg_replace('/\s+/', '', $value), $matches)) {
+            $conditionValue = (float)$matches[0];
+            $percentage = ((float)$matches[0]) / 100;
+
+            $value = $baseValue * $percentage;
+
+        } else {
+            $conditionValue = (float)$value;
+            $value = (float)$value;
+        }
+
+        $calculatedValue = abs(($maxValue && abs($value) > $maxValue) ? $maxValue : $value);
+
+        return $conditionValue >= 0 ? $calculatedValue : -$calculatedValue;
+
+    }
+
+    /**
+     * @param $sum
+     *
+     * @return mixed
+     */
+    private function calculateTaxes($sum)
+    {
+        $total = $sum;
+
+
+        $this->getTaxConditions()->each(function (CartCondition $condition) use (&$total) {
+
+            $total += $this->calculateValue($condition->getValue(), $total);
+
+        });
+
+        return $total;
     }
 }

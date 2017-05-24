@@ -2,6 +2,7 @@
 
 namespace Cyvelnet\EasyCart;
 
+use Cyvelnet\EasyCart\Collections\CartConditionCollection;
 use DateTime;
 
 /**
@@ -24,18 +25,23 @@ class CartInstanceManager
     private $instance;
 
     /**
+     * @var
+     */
+    private $conditions;
+
+    /**
      * CartInstanceManager constructor.
      */
     public function __construct($session)
     {
         $this->session = $session;
+        $this->conditions = new CartConditionCollection();
     }
 
     /**
      * @param $instance
-
      *
-     *@return \Cyvelnet\EasyCart\Cart
+     * @return \Cyvelnet\EasyCart\Cart
      */
     public function get($instance)
     {
@@ -49,10 +55,10 @@ class CartInstanceManager
     /**
      * create a new cart instance.
      *
-     *@param $instance
+     * @param $instance
      * @param null|DateTime $expiration
      *
-     *@return \Cyvelnet\EasyCart\Cart
+     * @return \Cyvelnet\EasyCart\Cart
      */
     public function create($instance, $expiration = null)
     {
@@ -60,7 +66,17 @@ class CartInstanceManager
 
         $this->instance = $name;
 
-        return new Cart($name, $expiration);
+        $cart = new Cart($name, $expiration);
+
+        // apply global conditions
+        $this->conditions->each(function ($condition) use ($cart) {
+
+            $cart->condition($condition);
+
+        });
+
+        return $cart;
+
     }
 
     /**
@@ -85,6 +101,18 @@ class CartInstanceManager
     public function getCurrentInstanceName()
     {
         return str_replace(self::CART_PREFIX, '', $this->instance);
+    }
+
+    public function addGlobalCondition($name, $value, $type = 'discount')
+    {
+        $condition = new CartCondition($name, $value, $type);
+
+        if ($this->conditions->doesntHaveCondition($condition)) {
+
+            $this->conditions->push($condition);
+
+        }
+
     }
 
     /**

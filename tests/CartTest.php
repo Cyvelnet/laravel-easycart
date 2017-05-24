@@ -255,7 +255,7 @@ class CartTest extends EasyCartTestCase
         $expiredAt = (new DateTime())->add(new DateInterval('PT5M'));
         $timestamp = $expiredAt->getTimestamp();
 
-        $cart->instance(null, $expiredAt)->add(1, 'foo', 10.99, 2);
+        $cart->instance('fooInstance', $expiredAt)->add(1, 'foo', 10.99, 2);
 
         $this->assertEquals($timestamp, $cart->expirationTimestamp());
     }
@@ -287,7 +287,7 @@ class CartTest extends EasyCartTestCase
 
         $cart->condition($new50PercentDiscountCondition);
 
-        $this->assertEquals($cart->subtotal() - ($cart->subtotal() * 0.5), $cart->total());
+        $this->assertEquals(500, $cart->total());
     }
 
     /**

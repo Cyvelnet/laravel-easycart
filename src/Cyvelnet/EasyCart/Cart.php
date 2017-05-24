@@ -286,7 +286,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     public function subtotal()
     {
         return $this->getCartItemCollection()->sum(function (CartItem $item) {
-            return $item->total();
+            return $item->subtotal();
         });
     }
 
@@ -297,7 +297,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      */
     public function total()
     {
-        return $this->subtotal() + $this->calculateConditionValue();
+        return $this->calculateTotal();
     }
 
     /**

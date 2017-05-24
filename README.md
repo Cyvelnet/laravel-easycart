@@ -27,6 +27,7 @@ And optionally add a new line to the `aliases` array:
 * [Usage](#usage)
 * [Filtering](#filtering)
 * [Condition](#condition)
+* [Instances](#instances)
 
 
 ## Usage

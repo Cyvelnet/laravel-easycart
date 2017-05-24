@@ -83,7 +83,7 @@ class CartItem extends ConditionableContract
      */
     public function total()
     {
-        return $this->subtotal() + $this->calculateConditionValue();
+        return $this->calculateTotal();
     }
 
     /**
