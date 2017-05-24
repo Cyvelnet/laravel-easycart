@@ -14,31 +14,31 @@ class CartItem extends ConditionableContract
     /**
      * @var
      */
-    private $rowId;
+    public $rowId;
     /**
      * @var
      */
-    private $id;
+    public $id;
     /**
      * @var
      */
-    private $name;
+    public $name;
     /**
      * @var
      */
-    private $price;
+    public $price;
     /**
      * @var
      */
-    private $qty;
+    public $qty;
     /**
      * @var array
      */
-    private $attributes;
+    public $attributes;
     /**
      * @var float|int
      */
-    private $weight;
+    public $weight;
     /**
      * @var
      */
