@@ -89,30 +89,26 @@ abstract class ConditionableContract
     }
 
     /**
-     * get conditions which is not targeted on products and is not tax type condition
+     * get conditions which is not targeted on products and is not tax type condition.
      *
      * @return mixed
      */
     public function getNonProductAndTaxConditions()
     {
         return $this->getConditions()->filter(function (CartCondition $condition) {
-
             return $condition->getTarget() !== 'products' && $condition->getType() !== 'tax';
-
         });
     }
 
     /**
-     * get tax type condition
+     * get tax type condition.
      *
      * @return mixed
      */
     public function getTaxConditions()
     {
         return $this->getConditions()->filter(function (CartCondition $condition) {
-
             return $condition->getType() === 'tax';
-
         });
     }
 
@@ -126,33 +122,28 @@ abstract class ConditionableContract
         $sum = $this->subtotal();
 
         $this->getNonProductAndTaxConditions()->each(function (CartCondition $condition) use (&$sum) {
-
             $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
-
         });
 
         // calculate tax after all conditions
         return $this->calculateTaxes($sum);
-
     }
 
     private function calculateValue($value, $baseValue, $maxValue = null)
     {
         if (preg_match('/[+-]?[0-9.]+%/', preg_replace('/\s+/', '', $value), $matches)) {
-            $conditionValue = (float)$matches[0];
-            $percentage = ((float)$matches[0]) / 100;
+            $conditionValue = (float) $matches[0];
+            $percentage = ((float) $matches[0]) / 100;
 
             $value = $baseValue * $percentage;
-
         } else {
-            $conditionValue = (float)$value;
-            $value = (float)$value;
+            $conditionValue = (float) $value;
+            $value = (float) $value;
         }
 
         $calculatedValue = abs(($maxValue && abs($value) > $maxValue) ? $maxValue : $value);
 
         return $conditionValue >= 0 ? $calculatedValue : -$calculatedValue;
-
     }
 
     /**
@@ -164,11 +155,8 @@ abstract class ConditionableContract
     {
         $total = $sum;
 
-
         $this->getTaxConditions()->each(function (CartCondition $condition) use (&$total) {
-
             $total += $this->calculateValue($condition->getValue(), $total);
-
         });
 
         return $total;

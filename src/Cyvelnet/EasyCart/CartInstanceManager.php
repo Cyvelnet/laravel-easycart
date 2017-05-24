@@ -70,13 +70,10 @@ class CartInstanceManager
 
         // apply global conditions
         $this->conditions->each(function ($condition) use ($cart) {
-
             $cart->condition($condition);
-
         });
 
         return $cart;
-
     }
 
     /**
@@ -108,11 +105,8 @@ class CartInstanceManager
         $condition = new CartCondition($name, $value, $type);
 
         if ($this->conditions->doesntHaveCondition($condition)) {
-
             $this->conditions->push($condition);
-
         }
-
     }
 
     /**
