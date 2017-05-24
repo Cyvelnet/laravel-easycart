@@ -23,7 +23,7 @@ class EasyCartServiceProvider extends ServiceProvider
     {
         if (function_exists('config_path')) {
             $this->publishes([
-                __DIR__ . '/config/easycart.php' => config_path('easycart.php'),
+                __DIR__.'/config/easycart.php' => config_path('easycart.php'),
             ], 'easycart');
         }
     }
@@ -35,7 +35,7 @@ class EasyCartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/easycart.php', 'easycart');
+        $this->mergeConfigFrom(__DIR__.'/config/easycart.php', 'easycart');
 
         $this->app->singleton('easycart', function ($app) {
             $manager = new CartInstanceManager($app['session'], $app['events']);
@@ -50,9 +50,7 @@ class EasyCartServiceProvider extends ServiceProvider
 
                 // add global condition
                 $manager->addGlobalCondition($name, $value, 'tax');
-
             }
-
 
             return $cart;
         });
@@ -67,5 +65,4 @@ class EasyCartServiceProvider extends ServiceProvider
     {
         return [];
     }
-
 }
