@@ -463,6 +463,47 @@ class CartTest extends EasyCartTestCase
     /**
      * @test
      */
+    public function it_should_delete_all_conditions()
+    {
+        $cart = $this->getCartInstance();
+        $cart->add(
+            [
+                [
+                    'id'    => 1,
+                    'name'  => 'foo',
+                    'qty'   => 2,
+                    'price' => 100,
+                ],
+                [
+                    'id'    => 2,
+                    'name'  => 'foobar',
+                    'qty'   => 2,
+                    'price' => 100,
+                ],
+            ]
+        );
+
+        $new50DiscountCondition = new \Cyvelnet\EasyCart\CartCondition('$50 Off', '-50', 'discount');
+        $new50DiscountCondition->onProduct();
+
+        $newDiscountCondition = new \Cyvelnet\EasyCart\CartCondition('$5 Off', '-5', 'discount');
+        $newDiscountCondition->onProduct();
+
+        $cart->condition([$new50DiscountCondition, $newDiscountCondition]);
+
+        $cart->removeAllConditions();
+
+        $this->assertTrue($cart->getConditions()->doesntHaveCondition($new50DiscountCondition));
+        $this->assertTrue($cart->getConditions()->doesntHaveCondition($newDiscountCondition));
+        $this->assertTrue($cart->find(1)->getConditions()->doesntHaveCondition($new50DiscountCondition));
+        $this->assertTrue($cart->find(1)->getConditions()->doesntHaveCondition($newDiscountCondition));
+        $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($new50DiscountCondition));
+        $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($newDiscountCondition));
+    }
+
+    /**
+     * @test
+     */
     public function it_should_delete_the_condition_by_type()
     {
         $cart = $this->getCartInstance();

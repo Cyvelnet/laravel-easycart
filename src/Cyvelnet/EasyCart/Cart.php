@@ -29,12 +29,12 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     /**
      * @var \Cyvelnet\EasyCart\Collections\CartItemCollection
      */
-    private $items;
+    protected $items;
 
     /**
      * @var \Cyvelnet\EasyCart\Collections\CartConditionCollection
      */
-    private $conditions;
+    protected $conditions;
 
     /**
      * CartInstance constructor.
@@ -102,9 +102,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * add product to cart.
      *
      * @param $id
-     * @param null  $name
-     * @param null  $price
-     * @param null  $qty
+     * @param null $name
+     * @param null $price
+     * @param null $qty
      * @param array $attributes
      * @param float $weight
      */
@@ -387,6 +387,24 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             });
         });
     }
+
+    /**
+     * remove all conditions.
+     */
+    public function removeAllConditions()
+    {
+
+        $this->getConditions()->each(function ($item, $key) {
+
+            $this->conditions->pop();
+
+        });
+
+        $this->getCartItemCollection()->each(function (CartItem $item) {
+            $item->removeAllConditions();
+        });
+    }
+
 
     /**
      * @param $item

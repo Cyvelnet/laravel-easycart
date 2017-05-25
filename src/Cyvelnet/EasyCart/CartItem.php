@@ -258,6 +258,21 @@ class CartItem extends ConditionableContract
     }
 
     /**
+     * remove all conditions.
+     */
+    public function removeAllConditions()
+    {
+
+        $this->getConditions()->each(function ($item, $key) {
+
+            $this->conditions->forget($key);
+
+        });
+        
+    }
+
+
+    /**
      * @return string
      */
     private function generateRowId()
@@ -266,7 +281,7 @@ class CartItem extends ConditionableContract
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId().serialize($attributes));
+        return md5($this->getId() . serialize($attributes));
     }
 
     /**
