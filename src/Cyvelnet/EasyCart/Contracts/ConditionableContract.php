@@ -137,13 +137,13 @@ abstract class ConditionableContract
     private function calculateValue($value, $baseValue, $maxValue = null)
     {
         if (preg_match('/[+-]?[0-9.]+%/', preg_replace('/\s+/', '', $value), $matches)) {
-            $conditionValue = (float)$matches[0];
-            $percentage = ((float)$matches[0]) / 100;
+            $conditionValue = (float) $matches[0];
+            $percentage = ((float) $matches[0]) / 100;
 
             $value = $baseValue * $percentage;
         } else {
-            $conditionValue = (float)$value;
-            $value = (float)$value;
+            $conditionValue = (float) $value;
+            $value = (float) $value;
         }
 
         $calculatedValue = abs(($maxValue && abs($value) > $maxValue) ? $maxValue : $value);

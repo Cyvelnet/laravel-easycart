@@ -102,9 +102,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * add product to cart.
      *
      * @param $id
-     * @param null $name
-     * @param null $price
-     * @param null $qty
+     * @param null  $name
+     * @param null  $price
+     * @param null  $qty
      * @param array $attributes
      * @param float $weight
      */
@@ -393,18 +393,14 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      */
     public function removeAllConditions()
     {
-
         $this->getConditions()->each(function ($item, $key) {
-
             $this->conditions->pop();
-
         });
 
         $this->getCartItemCollection()->each(function (CartItem $item) {
             $item->removeAllConditions();
         });
     }
-
 
     /**
      * @param $item
