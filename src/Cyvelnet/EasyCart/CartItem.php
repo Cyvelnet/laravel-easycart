@@ -191,7 +191,6 @@ class CartItem extends ConditionableContract
         $this->qty = Arr::get($allowedAttributes, 'qty', $this->qty);
         $this->attributes = new CartItemAttributeCollection(Arr::get($allowedAttributes, 'attributes',
             $this->attributes->toArray()));
-
     }
 
     /**
@@ -267,7 +266,7 @@ class CartItem extends ConditionableContract
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId() . serialize($attributes));
+        return md5($this->getId().serialize($attributes));
     }
 
     /**

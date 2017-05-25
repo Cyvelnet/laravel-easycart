@@ -515,8 +515,8 @@ class CartTest extends EasyCartTestCase
                     'qty'        => 2,
                     'price'      => 100,
                     'attributes' => [
-                        'color' => 'red'
-                    ]
+                        'color' => 'red',
+                    ],
                 ],
                 [
                     'id'    => 2,
