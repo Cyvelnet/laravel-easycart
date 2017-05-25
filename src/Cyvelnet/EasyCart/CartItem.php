@@ -3,6 +3,7 @@
 namespace Cyvelnet\EasyCart;
 
 use Cyvelnet\EasyCart\Collections\CartConditionCollection;
+use Cyvelnet\EasyCart\Collections\CartItemAttributeCollection;
 use Cyvelnet\EasyCart\Contracts\ConditionableContract;
 use Illuminate\Support\Arr;
 
@@ -32,7 +33,7 @@ class CartItem extends ConditionableContract
      */
     public $qty;
     /**
-     * @var array
+     * @var \Cyvelnet\EasyCart\Collections\CartItemAttributeCollection
      */
     public $attributes;
     /**
@@ -60,7 +61,7 @@ class CartItem extends ConditionableContract
         $this->name = $name;
         $this->price = $price;
         $this->qty = $qty;
-        $this->attributes = $attributes;
+        $this->attributes = new CartItemAttributeCollection($attributes);
         $this->weight = $weight;
         $this->rowId = $this->generateRowId();
         $this->conditions = new CartConditionCollection();
@@ -147,7 +148,7 @@ class CartItem extends ConditionableContract
     /**
      * get cart item product attributes.
      *
-     * @return array
+     * @return \Cyvelnet\EasyCart\Collections\CartItemAttributeCollection
      */
     public function getAttributes()
     {
@@ -185,9 +186,12 @@ class CartItem extends ConditionableContract
     {
         $allowedAttributes = Arr::only($attributes, ['name', 'price', 'qty', 'attributes']);
 
-        foreach ($allowedAttributes as $attribute => $data) {
-            $this->{$attribute} = $data;
-        }
+        $this->name = Arr::get($allowedAttributes, 'name', $this->name);
+        $this->price = Arr::get($allowedAttributes, 'price', $this->price);
+        $this->qty = Arr::get($allowedAttributes, 'qty', $this->qty);
+        $this->attributes = new CartItemAttributeCollection(Arr::get($allowedAttributes, 'attributes',
+            $this->attributes->toArray()));
+
     }
 
     /**
@@ -259,11 +263,11 @@ class CartItem extends ConditionableContract
      */
     private function generateRowId()
     {
-        $attributes = $this->getAttributes();
+        $attributes = $this->getAttributes()->toArray();
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId().serialize($attributes));
+        return md5($this->getId() . serialize($attributes));
     }
 
     /**

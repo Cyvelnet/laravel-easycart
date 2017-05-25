@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Class CartTest.
  */
@@ -500,5 +499,40 @@ class CartTest extends EasyCartTestCase
         $this->assertTrue($cart->find(1)->getConditions()->doesntHaveCondition($newDiscountCondition));
         $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($new50DiscountCondition));
         $this->assertTrue($cart->find(2)->getConditions()->doesntHaveCondition($newDiscountCondition));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_add_cart_item_attributes_to_collection()
+    {
+        $cart = $this->getCartInstance();
+        $cart->add(
+            [
+                [
+                    'id'         => 1,
+                    'name'       => 'foo',
+                    'qty'        => 2,
+                    'price'      => 100,
+                    'attributes' => [
+                        'color' => 'red'
+                    ]
+                ],
+                [
+                    'id'    => 2,
+                    'name'  => 'foobar',
+                    'qty'   => 2,
+                    'price' => 100,
+                ],
+            ]
+        );
+
+        $this->assertTrue($cart->find(1)->attributes->has('color'));
+        $this->assertEquals('red', $cart->find(1)->attributes->get('color'));
+
+        // ensure the data is not set to other cart item
+
+        $this->assertFalse($cart->find(2)->attributes->has('color'));
+        $this->assertNotSame('red', $cart->find(2)->attributes->get('color'));
     }
 }
