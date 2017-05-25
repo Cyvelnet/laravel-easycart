@@ -4,7 +4,6 @@ namespace Cyvelnet\EasyCart;
 
 use Cyvelnet\EasyCart\Contracts\ConditionableContract;
 use Cyvelnet\EasyCart\Contracts\ManipulatableInterface;
-use Cyvelnet\EasyCart\Contracts\Renderable;
 
 /**
  * Class Cart.
@@ -100,9 +99,9 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      * add product to cart.
      *
      * @param $id
-     * @param null $name
-     * @param null $price
-     * @param null $qty
+     * @param null  $name
+     * @param null  $price
+     * @param null  $qty
      * @param array $attributes
      * @param float $weight
      */

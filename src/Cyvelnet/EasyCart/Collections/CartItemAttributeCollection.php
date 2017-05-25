@@ -1,21 +1,16 @@
 <?php
 
-
 namespace Cyvelnet\EasyCart\Collections;
-
 
 use Illuminate\Support\Collection;
 
 /**
- * Class CartAttributeCollection
- *
- * @package Cyvelnet\EasyCart
+ * Class CartAttributeCollection.
  */
 class CartItemAttributeCollection extends Collection
 {
-
     /**
-     * access attribute in the collection with a given key
+     * access attribute in the collection with a given key.
      *
      * @param string $key
      *
@@ -25,5 +20,4 @@ class CartItemAttributeCollection extends Collection
     {
         return $this->get($key);
     }
-
 }

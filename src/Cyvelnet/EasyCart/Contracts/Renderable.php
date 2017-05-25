@@ -2,16 +2,13 @@
 
 namespace Cyvelnet\EasyCart\Contracts;
 
-
 /**
- * Interface Renderable
- *
- * @package Cyvelnet\EasyCart\Contracts
+ * Interface Renderable.
  */
 interface Renderable
 {
     /**
-     * render cart into view
+     * render cart into view.
      *
      * @param null $view
      *
