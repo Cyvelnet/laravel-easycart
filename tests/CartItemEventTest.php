@@ -3,7 +3,6 @@
 
 class CartItemEventTest extends EasyCartTestCase
 {
-
     /**
      * @test
      */
@@ -29,7 +28,6 @@ class CartItemEventTest extends EasyCartTestCase
 
         Event::assertDispatched('cart_item.condition.adding');
         Event::assertDispatched('cart_item.condition.added');
-
     }
 
     /**
@@ -56,7 +54,6 @@ class CartItemEventTest extends EasyCartTestCase
 
         Event::assertNotDispatched('cart_item.condition.adding');
         Event::assertNotDispatched('cart_item.condition.added');
-
     }
 
     /**
@@ -80,9 +77,7 @@ class CartItemEventTest extends EasyCartTestCase
 
         $cart->update($items->first()->getRowId(), ['qty' => 12]);
 
-
         Event::assertDispatched('cart_item.updating');
         Event::assertDispatched('cart_item.updated');
-
     }
 }

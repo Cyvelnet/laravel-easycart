@@ -223,9 +223,7 @@ class CartItem extends ConditionableContract
             && (count($condition->getProducts()) === 0 || in_array($this->getId(), $condition->getProducts()))
             && ($condition->getTarget() === 'products')
         ) {
-
             if (false === app('events')->fire('cart_item.condition.adding', $this)) {
-
                 return false;
             }
 
