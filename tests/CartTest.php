@@ -576,4 +576,5 @@ class CartTest extends EasyCartTestCase
         $this->assertFalse($cart->find(2)->attributes->has('color'));
         $this->assertNotSame('red', $cart->find(2)->attributes->get('color'));
     }
+
 }

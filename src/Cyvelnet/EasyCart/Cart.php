@@ -107,38 +107,42 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * @param null  $qty
      * @param array $attributes
      * @param float $weight
+     *
+     * @return \Cyvelnet\EasyCart\CartItem|\Cyvelnet\EasyCart\Collections\CartItemCollection
      */
     public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0)
     {
         // helps to add item one by one
         if (is_array($id)) {
+            $addedCartItemCollection = new CartItemCollection();
             foreach ($id as $row) {
-                $this->add(
+                $addedCartItemCollection->push($this->add(
                     $row['id'],
                     $row['name'],
                     $row['price'],
                     $row['qty'],
                     array_key_exists('attributes', $row) ? $row['attributes'] : [],
                     array_key_exists('weight', $row) ? $row['weight'] : 0.0
-                );
+                ));
+            }
+            return $addedCartItemCollection;
+        } else {
+
+            $item = new CartItem($id, $name, $price, $qty, $attributes, $weight);
+
+            // append quantity instead of insert a new rows
+            if ($this->exists($item->getRowId())) {
+
+                // reuse the existing item and update its qty accordingly
+                $existedItem = $this->getCartItemCollection()->get($item->getRowId());
+                $existedItem->addQty($item->getQty());
+
+                $item = $existedItem;
             }
 
-            return;
+            return $this->addToCollection($item);
         }
 
-        $item = new CartItem($id, $name, $price, $qty, $attributes, $weight);
-
-        // append quantity instead of insert a new rows
-        if ($this->exists($item->getRowId())) {
-
-            // reuse the existing item and update its qty accordingly
-            $existedItem = $this->getCartItemCollection()->get($item->getRowId());
-            $existedItem->addQty($item->getQty());
-
-            $item = $existedItem;
-        }
-
-        $this->addToCollection($item);
     }
 
     /**
@@ -156,13 +160,13 @@ class Cart extends ConditionableContract implements ManipulatableInterface
 
         $item = $this->get($rowId);
 
-        if (false === $this->triggerEvent('deleting', $item)) {
+        if (false === $this->triggerEvent('cart.deleting', $item)) {
             return false;
         }
 
         $this->getCartItemCollection()->forget($rowId);
 
-        $this->triggerEvent('deleted', $rowId, $item);
+        $this->triggerEvent('cart.deleted', $rowId, $item);
 
         return true;
     }
@@ -173,7 +177,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * @param $rowId
      * @param array|int $qty
      *
-     * @return bool
+     * @return \Cyvelnet\EasyCart\CartItem
      */
     public function update($rowId, $qty)
     {
@@ -320,6 +324,8 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * add cart condition.
      *
      * @param array|CartCondition $condition
+     *
+     * @return bool
      */
     public function condition($condition)
     {
@@ -329,13 +335,24 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             }
         }
 
+        if (false === app('events')->fire('cart.condition.adding', $this)) {
+
+            return false;
+
+        }
+
         if ($condition instanceof CartCondition && $this->conditions->doesntHaveCondition($condition)) {
+
             $this->conditions->push($condition);
 
             $this->applyConditionToItems($condition);
+
+            return true;
         }
 
         $this->persistCart();
+
+        return false;
     }
 
     /**
@@ -403,13 +420,15 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
+     * add a cart item to collection
+     *
      * @param $item
      *
-     * @return bool
+     * @return \Cyvelnet\EasyCart\CartItem
      */
     protected function addToCollection($item)
     {
-        if (false === $this->triggerEvent('adding', $item)) {
+        if (false === $this->triggerEvent('cart.adding', $item)) {
             return false;
         }
 
@@ -421,9 +440,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
 
         $this->persistCart();
 
-        $this->triggerEvent('added', $item->rowId);
+        $this->triggerEvent('cart.added', $item->rowId);
 
-        return true;
+        return $item;
     }
 
     /**
@@ -448,6 +467,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         });
     }
 
+    /**
+     *
+     */
     private function applyItemConditionToAllItems()
     {
         $this->conditions->filter(function ($item) {

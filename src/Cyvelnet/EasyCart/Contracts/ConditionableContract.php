@@ -14,6 +14,8 @@ abstract class ConditionableContract
      * add condition.
      *
      * @param array|\Cyvelnet\EasyCart\CartCondition $condition
+     *
+     * @return bool
      */
     abstract public function condition($condition);
 

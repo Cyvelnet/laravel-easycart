@@ -104,10 +104,12 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      * @param null  $qty
      * @param array $attributes
      * @param float $weight
+     *
+     * @return \Cyvelnet\EasyCart\CartItem|\Cyvelnet\EasyCart\Collections\CartItemCollection
      */
     public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0)
     {
-        $this->instance->add($id, $name, $price, $qty, $attributes, $weight);
+        return $this->instance->add($id, $name, $price, $qty, $attributes, $weight);
     }
 
     /**
@@ -128,7 +130,7 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      * @param $rowId
      * @param array|int $qty
      *
-     * @return bool
+     * @return \Cyvelnet\EasyCart\CartItem
      */
     public function update($rowId, $qty)
     {

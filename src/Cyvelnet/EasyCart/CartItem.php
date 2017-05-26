@@ -181,9 +181,15 @@ class CartItem extends ConditionableContract
      * merge & overrides cart item values.
      *
      * @param array $attributes
+     *
+     * @return bool
      */
     public function mergeFromArray($attributes = [])
     {
+        if (false === app('events')->fire('cart_item.updating', $this)) {
+            return false;
+        }
+        
         $allowedAttributes = Arr::only($attributes, ['name', 'price', 'qty', 'attributes']);
 
         $this->name = Arr::get($allowedAttributes, 'name', $this->name);
@@ -191,12 +197,18 @@ class CartItem extends ConditionableContract
         $this->qty = Arr::get($allowedAttributes, 'qty', $this->qty);
         $this->attributes = new CartItemAttributeCollection(Arr::get($allowedAttributes, 'attributes',
             $this->attributes->toArray()));
+
+        app('events')->fire('cart_item.updated', $this);
+
+        return true;
     }
 
     /**
      * add condition.
      *
      * @param array|\Cyvelnet\EasyCart\CartCondition $condition
+     *
+     * @return bool
      */
     public function condition($condition)
     {
@@ -211,8 +223,20 @@ class CartItem extends ConditionableContract
             && (count($condition->getProducts()) === 0 || in_array($this->getId(), $condition->getProducts()))
             && ($condition->getTarget() === 'products')
         ) {
+
+            if (false === app('events')->fire('cart_item.condition.adding', $this)) {
+
+                return false;
+            }
+
             $this->conditions->push($condition);
+
+            app('events')->fire('cart_item.condition.added', $condition, $this);
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -265,6 +289,10 @@ class CartItem extends ConditionableContract
         $this->getConditions()->each(function ($item, $key) {
             $this->conditions->forget($key);
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> added a few more events and tests
     }
 
     /**

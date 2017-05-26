@@ -36,11 +36,13 @@ interface ManipulatableInterface
      * add product to cart.
      *
      * @param $id
-     * @param null  $name
-     * @param null  $price
-     * @param null  $qty
+     * @param null $name
+     * @param null $price
+     * @param null $qty
      * @param array $attributes
      * @param float $weight
+     *
+     * @return \Cyvelnet\EasyCart\CartItem|\Cyvelnet\EasyCart\Collections\CartItemCollection
      */
     public function add($id, $name = null, $price = null, $qty = null, $attributes = [], $weight = 0.0);
 
@@ -59,7 +61,7 @@ interface ManipulatableInterface
      * @param $rowId
      * @param array|int $qty
      *
-     * @return bool
+     * @return \Cyvelnet\EasyCart\CartItem
      */
     public function update($rowId, $qty);
 
