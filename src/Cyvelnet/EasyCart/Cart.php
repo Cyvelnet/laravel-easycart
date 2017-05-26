@@ -125,9 +125,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
                     array_key_exists('weight', $row) ? $row['weight'] : 0.0
                 ));
             }
+
             return $addedCartItemCollection;
         } else {
-
             $item = new CartItem($id, $name, $price, $qty, $attributes, $weight);
 
             // append quantity instead of insert a new rows
@@ -142,7 +142,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
 
             return $this->addToCollection($item);
         }
-
     }
 
     /**
@@ -336,13 +335,10 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         }
 
         if (false === app('events')->fire('cart.condition.adding', $this)) {
-
             return false;
-
         }
 
         if ($condition instanceof CartCondition && $this->conditions->doesntHaveCondition($condition)) {
-
             $this->conditions->push($condition);
 
             $this->applyConditionToItems($condition);
@@ -420,7 +416,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     }
 
     /**
-     * add a cart item to collection
+     * add a cart item to collection.
      *
      * @param $item
      *
@@ -467,9 +463,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         });
     }
 
-    /**
-     *
-     */
     private function applyItemConditionToAllItems()
     {
         $this->conditions->filter(function ($item) {

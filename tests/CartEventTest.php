@@ -2,11 +2,10 @@
 
 
 /**
- * Class CartEventTest
+ * Class CartEventTest.
  */
 class CartEventTest extends EasyCartTestCase
 {
-
     /**
      * @test
      */
@@ -27,8 +26,8 @@ class CartEventTest extends EasyCartTestCase
 
         Event::assertDispatched('cart.adding');
         Event::assertDispatched('cart.added');
-
     }
+
     /**
      * @test
      */
@@ -42,6 +41,5 @@ class CartEventTest extends EasyCartTestCase
 
         Event::assertDispatched('cart.deleting');
         Event::assertDispatched('cart.deleted');
-
     }
 }
