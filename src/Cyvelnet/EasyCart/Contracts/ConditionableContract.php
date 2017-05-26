@@ -128,7 +128,7 @@ abstract class ConditionableContract
     {
         $sum = $this->subtotal();
 
-        $this->getNonProductAndTaxConditions()->each(function (CartCondition $condition) use (&$sum) {
+        $this->getCalculateableCondition()->each(function (CartCondition $condition) use (&$sum) {
             $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
         });
 
@@ -136,7 +136,7 @@ abstract class ConditionableContract
         return $this->calculateTaxes($sum);
     }
 
-    private function calculateValue($value, $baseValue, $maxValue = null)
+    protected function calculateValue($value, $baseValue, $maxValue = null)
     {
         if (preg_match('/[+-]?[0-9.]+%/', preg_replace('/\s+/', '', $value), $matches)) {
             $conditionValue = (float) $matches[0];
@@ -158,7 +158,7 @@ abstract class ConditionableContract
      *
      * @return mixed
      */
-    private function calculateTaxes($sum)
+    protected function calculateTaxes($sum)
     {
         $total = $sum;
 

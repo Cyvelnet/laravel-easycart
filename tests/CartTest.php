@@ -428,6 +428,42 @@ class CartTest extends EasyCartTestCase
     /**
      * @test
      */
+    public function it_should_calculate_product_condition_correctly()
+    {
+        $cart = $this->getCartInstance();
+        $cart->add(
+            [
+                [
+                    'id'    => 1,
+                    'name'  => 'foo',
+                    'qty'   => 2,
+                    'price' => 100,
+                ],
+                [
+                    'id'    => 2,
+                    'name'  => 'foobar',
+                    'qty'   => 2,
+                    'price' => 400,
+                ],
+            ]
+        );
+
+        $new50DiscountCondition = new \Cyvelnet\EasyCart\CartCondition('$50 Off', '-50%');
+        $new50DiscountCondition->onProduct([1, 2]);
+
+        $add20ToSubtotalCondition = new \Cyvelnet\EasyCart\CartCondition('Add $20', '20');
+
+        $cart->condition([$new50DiscountCondition, $add20ToSubtotalCondition]);
+
+        $this->assertTrue($cart->find(1)->getConditions()->hasCondition($new50DiscountCondition));
+        //$this->assertTrue($cart->find(2)->getConditions()->hasCondition($new50DiscountCondition));
+
+        $this->assertEquals(520, $cart->total());
+    }
+
+    /**
+     * @test
+     */
     public function it_should_delete_the_condition_by_name()
     {
         $cart = $this->getCartInstance();
