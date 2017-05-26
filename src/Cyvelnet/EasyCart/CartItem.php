@@ -189,7 +189,7 @@ class CartItem extends ConditionableContract
         if (false === app('events')->fire('cart_item.updating', $this)) {
             return false;
         }
-        
+
         $allowedAttributes = Arr::only($attributes, ['name', 'price', 'qty', 'attributes']);
 
         $this->name = Arr::get($allowedAttributes, 'name', $this->name);
@@ -289,10 +289,6 @@ class CartItem extends ConditionableContract
         $this->getConditions()->each(function ($item, $key) {
             $this->conditions->forget($key);
         });
-<<<<<<< HEAD
-=======
-
->>>>>>> added a few more events and tests
     }
 
     /**
