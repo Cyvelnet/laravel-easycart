@@ -102,9 +102,9 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      * add product to cart.
      *
      * @param $id
-     * @param null  $name
-     * @param null  $price
-     * @param null  $qty
+     * @param null $name
+     * @param null $price
+     * @param null $qty
      * @param array $attributes
      * @param float $weight
      *
@@ -492,7 +492,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      */
     private function triggerEvent($event, ...$param)
     {
-        return app('events')->fire($event, [$param, $this]);
+        return app('events')->fire($event, array_merge($param, [$this]));
     }
 
     /**

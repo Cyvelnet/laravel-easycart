@@ -186,7 +186,7 @@ class CartItem extends ConditionableContract
      */
     public function mergeFromArray($attributes = [])
     {
-        if (false === app('events')->fire('cart_item.updating', $this)) {
+        if (false === app('events')->fire('cart_item.updating', [$this])) {
             return false;
         }
 
@@ -198,7 +198,7 @@ class CartItem extends ConditionableContract
         $this->attributes = new CartItemAttributeCollection(Arr::get($allowedAttributes, 'attributes',
             $this->attributes->toArray()));
 
-        app('events')->fire('cart_item.updated', $this);
+        app('events')->fire('cart_item.updated', [$this]);
 
         return true;
     }
@@ -223,13 +223,13 @@ class CartItem extends ConditionableContract
             && (count($condition->getProducts()) === 0 || in_array($this->getId(), $condition->getProducts()))
             && ($condition->getTarget() === 'products')
         ) {
-            if (false === app('events')->fire('cart_item.condition.adding', $this)) {
+            if (false === app('events')->fire('cart_item.condition.adding', [$this])) {
                 return false;
             }
 
             $this->conditions->push($condition);
 
-            app('events')->fire('cart_item.condition.added', $condition, $this);
+            app('events')->fire('cart_item.condition.added', [$condition, $this]);
 
             return true;
         }
