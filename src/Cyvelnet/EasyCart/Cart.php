@@ -463,8 +463,8 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         });
     }
 
-    protected function calculateTotal(){
-
+    protected function calculateTotal()
+    {
         $sum = $this->items()->sum(function (CartItem $item) {
             return $item->total();
         });
@@ -475,7 +475,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
 
         // calculate tax after all conditions
         return $this->calculateTaxes($sum);
-
     }
 
     private function applyItemConditionToAllItems()
