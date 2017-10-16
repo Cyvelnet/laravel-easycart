@@ -88,6 +88,25 @@ class CartItem extends ConditionableContract
     }
 
     /**
+     * get cart item total without a condition by type
+     *
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function totalWithoutConditionType($type)
+    {
+        $sum = $this->subtotal();
+
+        $this->getConditionsWithoutType($type)->each(function (CartCondition $condition) use (&$sum) {
+            $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
+        });
+
+        // calculate tax after all conditions
+        return $this->calculateTaxes($sum);
+    }
+
+    /**
      * get total weight of cart item.
      *
      * @return float|int
@@ -298,7 +317,7 @@ class CartItem extends ConditionableContract
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId().serialize($attributes));
+        return md5($this->getId() . serialize($attributes));
     }
 
     /**

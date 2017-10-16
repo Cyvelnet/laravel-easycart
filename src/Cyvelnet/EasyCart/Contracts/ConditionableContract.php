@@ -70,6 +70,20 @@ abstract class ConditionableContract
     }
 
     /**
+     * get applied condition without a type.
+     *
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function getConditionsWithoutType($type)
+    {
+        return $this->getConditions()->filter(function ($condition) use ($type) {
+            return $condition->getType() !== $type;
+        });
+    }
+
+    /**
      * get applied condition by its name.
      *
      * @param $name
