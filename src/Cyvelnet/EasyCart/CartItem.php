@@ -88,7 +88,7 @@ class CartItem extends ConditionableContract
     }
 
     /**
-     * get cart item total without a condition by type
+     * get cart item total without a condition by type.
      *
      * @param $type
      *
@@ -317,7 +317,7 @@ class CartItem extends ConditionableContract
         // key sort the item attributes before generate a hash
         ksort($attributes);
 
-        return md5($this->getId() . serialize($attributes));
+        return md5($this->getId().serialize($attributes));
     }
 
     /**
