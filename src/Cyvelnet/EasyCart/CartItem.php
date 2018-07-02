@@ -191,7 +191,7 @@ class CartItem extends ConditionableContract
      */
     public function addQty($qty = 1)
     {
-        if (is_int($qty) && $qty >= 1) {
+        if (filter_var($qty, FILTER_VALIDATE_INT) && $qty >= 1) {
             $this->qty += $qty;
         }
     }
