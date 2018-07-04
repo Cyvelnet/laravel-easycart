@@ -4,7 +4,7 @@
  * Class CartTest.
  */
 class CartTest extends EasyCartTestCase
- {
+{
     /**
      * @test
      */
@@ -286,7 +286,6 @@ class CartTest extends EasyCartTestCase
 
         $cart->condition($new50PercentDiscountCondition);
 
-        
         $this->assertEquals(500, $cart->total());
     }
 
@@ -394,9 +393,6 @@ class CartTest extends EasyCartTestCase
         $this->assertTrue($cart->find(3)->getConditions()->doesntHaveCondition($new50DiscountCondition));
     }
 
-    /**
-     * 
-     */
     public function it_should_apply_condition_to_all_products_when_no_specified_which_to_apply()
     {
         $cart = $this->getCartInstance();
@@ -458,11 +454,10 @@ class CartTest extends EasyCartTestCase
         $new50DiscountCondition = new \Cyvelnet\EasyCart\CartCondition('$50 Off', '-50%');
         $new50DiscountCondition->onProduct([1, 2]);
 
-       // $add20ToSubtotalCondition = new \Cyvelnet\EasyCart\CartCondition('Add $20', '20');
+        // $add20ToSubtotalCondition = new \Cyvelnet\EasyCart\CartCondition('Add $20', '20');
 
-       // $cart->condition([$new50DiscountCondition, $add20ToSubtotalCondition]);
+        // $cart->condition([$new50DiscountCondition, $add20ToSubtotalCondition]);
         $cart->condition($new50DiscountCondition);
-
 
         //$this->assertTrue($cart->find(1)->getConditions()->hasCondition($new50DiscountCondition));
         //$this->assertTrue($cart->find(2)->getConditions()->hasCondition($new50DiscountCondition));
@@ -625,7 +620,8 @@ class CartTest extends EasyCartTestCase
     /**
      * @test
      */
-    public function it_should_not_apply_condition_when_minimum_purchase_is_not_met(){
+    public function it_should_not_apply_condition_when_minimum_purchase_is_not_met()
+    {
         $cart = $this->getCartInstance();
         $cart->add(
             [
@@ -637,7 +633,7 @@ class CartTest extends EasyCartTestCase
                     'attributes' => [
                         'color' => 'red',
                     ],
-                ]
+                ],
             ]
         );
 
@@ -645,7 +641,7 @@ class CartTest extends EasyCartTestCase
 
         $condition->applyWithMinimum(300);
 
-        $cart->condition($condition); 
+        $cart->condition($condition);
 
         $this->assertEquals(200, $cart->total());
 
@@ -655,13 +651,13 @@ class CartTest extends EasyCartTestCase
         ]);
 
         $this->assertEquals(200, $cart->total());
-
     }
 
     /**
      * @test
      */
-    public function it_should_calculate_minimum_purchase_per_cart(){
+    public function it_should_calculate_minimum_purchase_per_cart()
+    {
         $cart = $this->getCartInstance();
         $cart->add(
             [
@@ -676,7 +672,7 @@ class CartTest extends EasyCartTestCase
                     'name'       => 'bar',
                     'qty'        => 2,
                     'price'      => 300,
-                ]
+                ],
             ]
         );
 
@@ -689,25 +685,23 @@ class CartTest extends EasyCartTestCase
         $cart->condition($condition);
 
         $this->assertEquals(700, $cart->total());
-        
+
         // ensure 100OFF discount condition is not apply
         $this->assertEquals(200, $cart->find(1)->total());
-        
+
         // add one more quantity to make cart fulfill with minimum purchase condition
         $cart->add(1, 'foo', 100, 1);
 
         // ensure 100OFF discount condition is apply
         $this->assertEquals(300, $cart->find(1)->total());
         $this->assertEquals(800, $cart->total());
-
-
-
     }
 
     /**
      * @test
      */
-    public function it_should_calculate_minimum_purchase_per_items(){
+    public function it_should_calculate_minimum_purchase_per_items()
+    {
         $cart = $this->getCartInstance();
         $cart->add(
             [
@@ -722,7 +716,7 @@ class CartTest extends EasyCartTestCase
                     'name'       => 'bar',
                     'qty'        => 2,
                     'price'      => 300,
-                ]
+                ],
             ]
         );
 
@@ -736,10 +730,10 @@ class CartTest extends EasyCartTestCase
         $cart->condition($condition);
 
         $this->assertEquals(700, $cart->total());
-        
+
         // ensure 100OFF discount condition is not apply
         $this->assertEquals(200, $cart->find(1)->total());
-        
+
         // add one more quantity to make cart fulfill with minimum purchase condition
         $cart->add(1, 'foo', 100, 1);
 
@@ -747,8 +741,5 @@ class CartTest extends EasyCartTestCase
         $this->assertEquals(200, $cart->find(1)->total());
         $this->assertEquals(500, $cart->find(2)->total());
         $this->assertEquals(700, $cart->total());
-
-
-
     }
 }

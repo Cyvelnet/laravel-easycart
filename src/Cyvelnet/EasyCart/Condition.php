@@ -39,7 +39,7 @@ abstract class Condition
      * @var bool|int|float
      */
     protected $applyMinimum = false;
-/**
+    /**
      * @var bool
      */
     protected $applyMinimumForEach = false;
@@ -121,7 +121,7 @@ abstract class Condition
     {
         return $this->maxValue;
     }
-    
+
     /**
      * @return bool|float|int
      */
@@ -129,7 +129,7 @@ abstract class Condition
     {
         return $this->applyMinimum;
     }
-    
+
     /**
      * @return bool|float|int
      */
@@ -138,9 +138,8 @@ abstract class Condition
         return $this->applyMinimumForEach;
     }
 
-
     /**
-     * determine if a subtotal has passed the given apply minumn & maximum rule
+     * determine if a subtotal has passed the given apply minumn & maximum rule.
      *
      * @param $subtotal
      *
@@ -152,15 +151,10 @@ abstract class Condition
             return true;
         }
 
-
-        if(count($this->products) > 0 && !$this->applyMinimumForEach){
-
+        if (count($this->products) > 0 && !$this->applyMinimumForEach) {
             return false;
         }
 
-
         return $this->applyMinimum <= $subtotal;
-
     }
-
 }

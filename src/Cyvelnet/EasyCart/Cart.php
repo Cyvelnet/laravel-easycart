@@ -459,29 +459,16 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     protected function getCalculateableCondition()
     {
         return $this->getConditions()->filter(function (CartCondition $condition) {
-
-
-            if($condition->getType() !== 'tax'){
-
-
-                
-                if(($condition->getApplyMinimum() && !$condition->getApplyMinimumForEach() 
-                && $condition->getApplyMinimum() <= $this->subtotal())){
-
+            if ($condition->getType() !== 'tax') {
+                if (($condition->getApplyMinimum() && !$condition->getApplyMinimumForEach()
+                && $condition->getApplyMinimum() <= $this->subtotal())) {
                     return true;
-
                 }
 
-                
-                if($condition->getTarget() !== 'products' && !$condition->getApplyMinimum() ){
-
+                if ($condition->getTarget() !== 'products' && !$condition->getApplyMinimum()) {
                     return true;
-
                 }
-
             }
-
-
         });
     }
 
@@ -491,11 +478,8 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             return $item->total();
         });
 
-
         $this->getCalculateableCondition()->each(function (CartCondition $condition) use (&$sum) {
-
             $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
-
         });
 
         // calculate tax after all conditions
@@ -523,15 +507,13 @@ class Cart extends ConditionableContract implements ManipulatableInterface
         });
     }
 
-    private function getSumOfItems(array $ids = []){
-
-        return $this->items()->filter(function ($item) use ($ids){
+    private function getSumOfItems(array $ids = [])
+    {
+        return $this->items()->filter(function ($item) use ($ids) {
             return in_array($item->id, $ids);
         })->sum(function ($item) {
             return $item->total();
         });
-
-
     }
 
     /**
