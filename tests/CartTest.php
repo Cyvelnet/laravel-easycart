@@ -746,9 +746,8 @@ class CartTest extends EasyCartTestCase
     /**
      * @test
      */
-    public function it_should_persist_cart_condition_on_empty_cart(){
-
-        
+    public function it_should_persist_cart_condition_on_empty_cart()
+    {
         $cart = $this->getCartInstance();
 
         $condition = new \Cyvelnet\EasyCart\CartCondition('100OFF', '-100', 'discount');
@@ -759,7 +758,5 @@ class CartTest extends EasyCartTestCase
         $cart->add(1, 'Foo', 100, 5);
 
         $this->assertEquals(400, $cart->total());
-
-
     }
 }
