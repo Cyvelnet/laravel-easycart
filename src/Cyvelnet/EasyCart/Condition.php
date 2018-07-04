@@ -117,7 +117,7 @@ abstract class Condition
     {
         return $this->maxValue;
     }
-    
+
     /**
      * @return bool|float|int
      */
@@ -127,7 +127,7 @@ abstract class Condition
     }
 
     /**
-     * determine if a subtotal has passed the given apply minumn & maximum rule
+     * determine if a subtotal has passed the given apply minumn & maximum rule.
      *
      * @param $subtotal
      *
@@ -140,7 +140,5 @@ abstract class Condition
         }
 
         return $this->applyMinimum <= $subtotal;
-
     }
-
 }
