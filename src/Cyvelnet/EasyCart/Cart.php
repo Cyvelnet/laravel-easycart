@@ -344,7 +344,6 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             $this->applyConditionToItems($condition);
         }
 
-
         $this->persistCart();
 
         return true;
