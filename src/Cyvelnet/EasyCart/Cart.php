@@ -459,7 +459,29 @@ class Cart extends ConditionableContract implements ManipulatableInterface
     protected function getCalculateableCondition()
     {
         return $this->getConditions()->filter(function (CartCondition $condition) {
-            return $condition->getTarget() !== 'products' &&$condition->getType() !== 'tax' && $condition->isFulfillMinimum($this->subtotal());
+
+
+            if($condition->getType() !== 'tax'){
+
+
+                
+                if(($condition->getApplyMinimum() && !$condition->getApplyMinimumForEach() 
+                && $condition->getApplyMinimum() <= $this->subtotal())){
+
+                    return true;
+
+                }
+
+                
+                if($condition->getTarget() !== 'products' && !$condition->getApplyMinimum() ){
+
+                    return true;
+
+                }
+
+            }
+
+
         });
     }
 
@@ -469,18 +491,11 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             return $item->total();
         });
 
+
         $this->getCalculateableCondition()->each(function (CartCondition $condition) use (&$sum) {
 
-            $baseValue = $sum;
+            $sum += $this->calculateValue($condition->getValue(), $sum, $condition->maxValue());
 
-            if(count($condition->getProducts()) > 0){
-
-                $baseValue = $this->getSumOfItems($condition->getProducts());
-
-            }
-            
-
-            $sum += $this->calculateValue($condition->getValue(), $baseValue, $condition->maxValue());
         });
 
         // calculate tax after all conditions

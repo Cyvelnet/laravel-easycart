@@ -64,9 +64,19 @@ class CartCondition extends Condition
         return $this;
     }
 
-    public function applyWithMinimum($value)
+    /**
+     * 
+     * @param int|float $value
+     * @param bool $each Determine if minimum should apply per cart item, when apply condition to a group of products
+     * 
+     * @return $this
+     * 
+     */
+
+    public function applyWithMinimum($value, $each = false)
     {
         $this->applyMinimum = $value;
+        $this->applyMinimumForEach = $each;
 
         return $this;
     }
