@@ -36,6 +36,11 @@ abstract class Condition
     protected $maxValue;
 
     /**
+     * @var bool|int|float
+     */
+    protected $applyMinimum = false;
+
+    /**
      * set the condition target.
      *
      * @return string
@@ -112,4 +117,30 @@ abstract class Condition
     {
         return $this->maxValue;
     }
+    
+    /**
+     * @return bool|float|int
+     */
+    public function getApplyMinimum()
+    {
+        return $this->applyMinimum;
+    }
+
+    /**
+     * determine if a subtotal has passed the given apply minumn & maximum rule
+     *
+     * @param $subtotal
+     *
+     * @return bool
+     */
+    public function isFulfillMinimum($subtotal)
+    {
+        if (!$this->applyMinimum) {
+            return true;
+        }
+
+        return $this->applyMinimum <= $subtotal;
+
+    }
+
 }

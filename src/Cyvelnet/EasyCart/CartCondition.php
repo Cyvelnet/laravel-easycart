@@ -63,4 +63,11 @@ class CartCondition extends Condition
 
         return $this;
     }
+
+    public function applyWithMinimum($value)
+    {
+        $this->applyMinimum = $value;
+
+        return $this;
+    }
 }

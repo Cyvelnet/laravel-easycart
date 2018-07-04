@@ -328,7 +328,7 @@ class CartItem extends ConditionableContract
     protected function getCalculateableCondition()
     {
         return $this->getConditions()->filter(function (CartCondition $condition) {
-            return $condition->getTarget() === 'products';
+            return $condition->getTarget() === 'products' && $condition->isFulfillMinimum($this->subtotal());
         });
     }
 
