@@ -522,7 +522,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
      */
     private function triggerEvent($event, ...$param)
     {
-        return app('events')->fire($event, array_merge($param, [$this]));
+        return app('events')->dispatch($event, array_merge($param, [$this]));
     }
 
     /**
