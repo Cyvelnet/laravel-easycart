@@ -57,8 +57,10 @@ class CartInstanceBridge extends ConditionableContract implements ManipulatableI
      */
     public function instance($instance = null, $expiredAt = null)
     {
-        $this->instance = $this->manager->has($instance) ? $this->manager->get($instance) : $this->manager->create($instance,
-            $expiredAt);
+        $this->instance = $this->manager->has($instance) ? $this->manager->get($instance) : $this->manager->create(
+            $instance,
+            $expiredAt
+        );
 
         return $this->instance;
     }

@@ -214,8 +214,11 @@ class CartItem extends ConditionableContract
         $this->name = Arr::get($allowedAttributes, 'name', $this->name);
         $this->price = Arr::get($allowedAttributes, 'price', $this->price);
         $this->qty = Arr::get($allowedAttributes, 'qty', $this->qty);
-        $this->attributes = new CartItemAttributeCollection(Arr::get($allowedAttributes, 'attributes',
-            $this->attributes->toArray()));
+        $this->attributes = new CartItemAttributeCollection(Arr::get(
+            $allowedAttributes,
+            'attributes',
+            $this->attributes->toArray()
+        ));
 
         app('events')->fire('cart_item.updated', [$this]);
 
@@ -277,7 +280,7 @@ class CartItem extends ConditionableContract
             return $item->getType() === $type;
         });
 
-        $toRemoves->each(function ($item, $key) use ($type) {
+        $toRemoves->each(function ($item, $key) {
             $this->conditions->forget($key);
         });
     }
