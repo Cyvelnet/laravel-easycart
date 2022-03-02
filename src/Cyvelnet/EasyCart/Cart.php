@@ -334,7 +334,7 @@ class Cart extends ConditionableContract implements ManipulatableInterface
             }
         }
 
-        if (false === app('events')->fire('cart.condition.adding', $this)) {
+        if (false === app('events')->dispatch('cart.condition.adding', $this)) {
             return false;
         }
 
