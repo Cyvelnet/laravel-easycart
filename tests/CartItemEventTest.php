@@ -1,6 +1,5 @@
 <?php
 
-
 class CartItemEventTest extends EasyCartTestCase
 {
     /**
